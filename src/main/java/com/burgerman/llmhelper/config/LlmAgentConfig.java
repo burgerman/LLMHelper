@@ -1,22 +1,14 @@
 package com.burgerman.llmhelper.config;
 
-import com.burgerman.llmhelper.controller.LlmAgentController;
 import com.burgerman.llmhelper.data.RagBase;
 import com.burgerman.llmhelper.service.LlmAgent;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.memory.ChatMemory;
-import dev.langchain4j.memory.chat.ChatMemoryProvider;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
-import dev.langchain4j.memory.chat.TokenWindowChatMemory;
-import dev.langchain4j.model.TokenCountEstimator;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
-import dev.langchain4j.model.embedding.onnx.HuggingFaceTokenCountEstimator;
-import dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2EmbeddingModel;
-import dev.langchain4j.model.language.LanguageModel;
 import dev.langchain4j.model.ollama.OllamaChatModel;
 import dev.langchain4j.model.ollama.OllamaEmbeddingModel;
-import dev.langchain4j.model.ollama.OllamaLanguageModel;
 import dev.langchain4j.rag.content.retriever.ContentRetriever;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.service.AiServices;
@@ -45,15 +37,14 @@ public class LlmAgentConfig {
     private int chatTimeOut;
 
     @Bean
-    public ChatModel languageModel() {
+    public ChatModel chatModel() {
         return OllamaChatModel.builder()
                 .baseUrl(baseUrl)
                 .modelName(modelName)
-                .timeout(Duration.ofSeconds(chatTimeOut))
                 .build();
     }
 
-    @Bean(name = "ollamaChatMemory")
+    @Bean
     ChatMemory chatMemory() {
         return MessageWindowChatMemory.withMaxMessages(2);
     }
@@ -63,7 +54,7 @@ public class LlmAgentConfig {
         return RagBase.ingestData(embeddingModel);
     }
 
-    @Bean(name = "ollamaContentRetriever")
+    @Bean
     ContentRetriever contentRetriever(EmbeddingStore<TextSegment> embeddingStore, EmbeddingModel embeddingModel) {
         // You will need to adjust these parameters to find the optimal setting,
         // which will depend on multiple factors, for example:
@@ -88,14 +79,14 @@ public class LlmAgentConfig {
                 .build();
     }
 
-    @Bean
-    public LlmAgent assistant(ContentRetriever contentRetriever, ChatModel model, ChatMemory memory) {
-        logger.debug("Creating LlmAgent");
-        return AiServices.builder(LlmAgent.class)
-                .chatModel(model)
-                .contentRetriever(contentRetriever)
-                .chatMemory(memory)
-                .build();
-    }
+//    @Bean
+//    public LlmAgent llmAgent(ContentRetriever contentRetriever, ChatModel model, ChatMemory memory) {
+//        logger.debug("Creating LlmAgent");
+//        return AiServices.builder(LlmAgent.class)
+//                .chatModel(model)
+//                .contentRetriever(contentRetriever)
+//                .chatMemory(memory)
+//                .build();
+//    }
 
 }

@@ -7,7 +7,7 @@ import dev.langchain4j.service.spring.AiService;
 
 import static dev.langchain4j.service.spring.AiServiceWiringMode.EXPLICIT;
 
-@AiService(wiringMode = EXPLICIT, chatModel = "ollamaChatModel")
+@AiService
 public interface LlmAgent {
 
     @SystemMessage("""
@@ -23,6 +23,6 @@ public interface LlmAgent {
             "{"id":123456, "timestamp":{{current_timestamp}}, "sender":"user1@gmail.com", "type", "IT", "severity":"High", "issue":"Cloud service is not available.", "support_team":"Cloud_Ops_Team"}".
             Except JSON data, ensure no extra info included in your final response.
             """)
-    Result<String> answer(@UserMessage String userMessage);
+    Result<String> chat(@UserMessage String userMessage);
 
 }

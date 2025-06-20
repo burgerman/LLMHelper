@@ -1,0 +1,5 @@
+Fault ID: F001. Description: High Temperature on PUMP-001. Possible Causes: Low lubrication, bearing wear, blocked outlet VALVE-001. Recommended Action: Check lubrication levels and bearing condition.
+Event ID: E001. Description: Pressure drop in PIPE-002 below 100 PSI. Related Components: PUMP-001, VALVE-001, SENSOR-P1. Possible Causes: Leak in PIPE-002, PUMP-001 failure, VALVE-001 partially closed.
+Rule ID: R001. Condition: If SENSOR-T1 reading > 80C. Action: Generate HIGH_TEMP_ALERT for PUMP-001. Priority: High.
+Maintenance Note M001: PUMP-001 bearings last replaced 6 months ago. Next inspection due in 1 month.
+Safety Procedure S001: Before servicing PUMP-001, ensure MOTOR-001 is locked out and VALVE-001 is closed.

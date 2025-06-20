@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/ai")
+@CrossOrigin(origins = "*")
 public class LlmAgentController {
     private static final Logger logger = LoggerFactory.getLogger(LlmAgentController.class);
 
@@ -21,7 +22,7 @@ public class LlmAgentController {
 
     public String getResponse(String userMessage) {
         logger.debug("Sending to Ollama: {}",  userMessage);
-        Result<String> res = llmAgent.answer(userMessage);
+        Result<String> res = llmAgent.chat(userMessage);
         String answer = res.content();
         logger.debug("Receiving from Ollama: {}",  answer);
         if (answer != null && !answer.isEmpty()) {
